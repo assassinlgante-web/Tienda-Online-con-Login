@@ -1,4 +1,4 @@
-# Tienda Online — Proyecto de Equipo
+[# Tienda Online — Proyecto de Equipo
 
 Proyecto de práctica: tienda online completa con login, catálogo, carrito y panel de administración. Construido en equipo para aprender a colaborar en GitHub con ramas y Pull Requests.
 
@@ -19,4 +19,4 @@ Proyecto de práctica: tienda online completa con login, catálogo, carrito y pa
 
 ## Cómo trabajar en este repo
 
-1. Clona el repositorio:
+1. Clona el repositorio:](https://github.com/assassinlgante-web/Tienda-Online-con-Login)
