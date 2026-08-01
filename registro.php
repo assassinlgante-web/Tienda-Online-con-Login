@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // Revisar si el correo ya existe (usamos consulta preparada para evitar SQL Injection)
     if (empty($errores)) {
-        $stmt = mysqli_prepare($conexion, "SELECT id FROM usuarios WHERE email = ?");
+        $stmt = mysqli_prepare($conexion, "SELECT usu_id FROM USUARIO WHERE usu_email = ?");
         mysqli_stmt_bind_param($stmt, "s", $email); // "s" = el parámetro es un string
         mysqli_stmt_execute($stmt);
         mysqli_stmt_store_result($stmt);
@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // PASSWORD_DEFAULT usa el algoritmo más seguro recomendado por PHP actualmente.
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
-        $stmt = mysqli_prepare($conexion, "INSERT INTO usuarios (nombre, email, password) VALUES (?, ?, ?)");
+        $stmt = mysqli_prepare($conexion, "INSERT INTO USUARIO (usu_nombre, usu_email, usu_password) VALUES (?, ?, ?)");
         mysqli_stmt_bind_param($stmt, "sss", $nombre, $email, $passwordHash);
 
         if (mysqli_stmt_execute($stmt)) {
