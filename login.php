@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $errores[] = "Correo y contraseña son obligatorios.";
     } else {
         // Buscamos al usuario por correo (consulta preparada, evita SQL Injection)
-        $stmt = mysqli_prepare($conexion, "SELECT id, nombre, email, password, rol FROM usuarios WHERE email = ?");
+        $stmt = mysqli_prepare($conexion, "SELECT usu_id, usu_nombre, usu_email, usu_password, usu_rol FROM USUARIO WHERE usu_email = ?");
         mysqli_stmt_bind_param($stmt, "s", $email);
         mysqli_stmt_execute($stmt);
         $resultado = mysqli_stmt_get_result($stmt);
@@ -26,11 +26,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         // password_verify() compara la contraseña escrita contra el HASH guardado.
         // Nunca se "desencripta" el hash, solo se compara.
-        if ($usuario && password_verify($password, $usuario["password"])) {
+        if ($usuario && password_verify($password, $usuario["usu_password"])) {
             // Login correcto: guardamos los datos del usuario en la sesión
-            $_SESSION["usuario_id"] = $usuario["id"];
-            $_SESSION["usuario_nombre"] = $usuario["nombre"];
-            $_SESSION["usuario_rol"] = $usuario["rol"];
+            $_SESSION["usuario_id"] = $usuario["usu_id"];
+            $_SESSION["usuario_nombre"] = $usuario["usu_nombre"];
+            $_SESSION["usuario_rol"] = $usuario["usu_rol"];
 
             // Redirigimos a la página protegida
             header("Location: perfil.php");
