@@ -89,7 +89,6 @@ $categorias = mysqli_query($conexion, "SELECT cat_id, cat_nombre FROM CATEGORIA 
   <nav>
     <a href="productos.php">Catálogo</a>
     <?php if (isset($_SESSION["usuario_id"])): ?>
-      <a href="agregar_producto.php">+ Agregar producto</a>
       <a href="perfil.php">Mi cuenta</a>
     <?php else: ?>
       <a href="login.php">Iniciar sesión</a>
