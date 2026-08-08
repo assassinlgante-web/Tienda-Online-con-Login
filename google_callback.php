@@ -112,6 +112,6 @@ $_SESSION["usuario_id"] = $usu_id;
 $_SESSION["usuario_nombre"] = $usu_nombre;
 $_SESSION["usuario_rol"] = $usu_rol;
 
-header("Location: perfil.php");
+header("Location: productos.php");
 exit;
 ?>

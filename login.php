@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $_SESSION["usuario_rol"] = $usuario["usu_rol"];
 
             // Redirigimos a la página protegida
-            header("Location: perfil.php");
+            header("Location: productos.php");
             exit; // siempre usar exit después de header("Location: ...")
         } else {
             // Mensaje genérico a propósito: no decimos si falló el correo
