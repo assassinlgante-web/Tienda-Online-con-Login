@@ -80,9 +80,29 @@ $categorias = mysqli_query($conexion, "SELECT cat_id, cat_nombre FROM CATEGORIA 
   .card .precio{ font-weight:700; color:var(--ink); font-size:1.05rem; }
   .card .stock{ font-size:0.78rem; color:var(--slate); margin-top:4px; }
   .vacio{ text-align:center; color:var(--slate); padding:60px 20px; }
+  .card-admin{ display:flex; gap:8px; padding:0 14px 14px; }
+  .card-admin a, .card-admin button{ flex:1; padding:7px; border-radius:6px; font-size:0.8rem; text-align:center; text-decoration:none; cursor:pointer; border:1px solid var(--line); }
+  .card-admin a{ color:var(--ink); background:#fff; }
+  .card-admin button{ color:#C1121F; background:#fff; border-color:#f3c9cc; }
+  .mensaje-top{ background:#e8f6f3; color:#2A9D8F; padding:10px 24px; text-align:center; font-size:0.9rem; }
+  .error-top{ background:#fdecea; color:#c1121f; padding:10px 24px; text-align:center; font-size:0.9rem; }
+  .card-nuevo{ display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:260px; border:2px dashed var(--line); border-radius:10px; text-decoration:none; color:var(--slate); transition:border-color 0.15s, color 0.15s; }
+  .card-nuevo:hover{ border-color:var(--amber); color:var(--amber); }
+  .card-nuevo .plus{ font-size:2.2rem; line-height:1; margin-bottom:8px; }
+  .card-nuevo span{ font-size:0.9rem; font-weight:600; }
 </style>
 </head>
 <body>
+
+<?php if (isset($_GET["mensaje"]) && $_GET["mensaje"] === "producto_eliminado"): ?>
+  <div class="mensaje-top">✓ Producto eliminado correctamente.</div>
+<?php endif; ?>
+<?php if (isset($_GET["error"]) && $_GET["error"] === "sin_permiso"): ?>
+  <div class="error-top">No tienes permiso para hacer esa acción.</div>
+<?php endif; ?>
+<?php if (isset($_GET["error"]) && $_GET["error"] === "no_se_pudo_eliminar"): ?>
+  <div class="error-top">No se pudo eliminar: este producto ya tiene pedidos asociados.</div>
+<?php endif; ?>
 
 <header>
   <div class="logo">Tienda<span style="color:var(--amber)">Online</span></div>
@@ -110,10 +130,18 @@ $categorias = mysqli_query($conexion, "SELECT cat_id, cat_nombre FROM CATEGORIA 
     <button type="submit">Filtrar</button>
   </form>
 
-  <?php if (empty($productos)): ?>
+  <?php $es_admin = ($_SESSION["usuario_rol"] ?? "") === "admin"; ?>
+
+  <?php if (empty($productos) && !$es_admin): ?>
     <div class="vacio">No se encontraron productos con esos filtros.</div>
   <?php else: ?>
     <div class="grid">
+      <?php if ($es_admin): ?>
+        <a href="agregar_producto.php" class="card-nuevo">
+          <div class="plus">+</div>
+          <span>Agregar producto</span>
+        </a>
+      <?php endif; ?>
       <?php foreach ($productos as $p): ?>
         <div class="card">
           <img src="<?= htmlspecialchars($p["pro_imagen_url"]) ?>" alt="<?= htmlspecialchars($p["pro_nombre"]) ?>">
@@ -123,6 +151,15 @@ $categorias = mysqli_query($conexion, "SELECT cat_id, cat_nombre FROM CATEGORIA 
             <div class="precio">S/. <?= number_format($p["pro_precio"], 2) ?></div>
             <div class="stock"><?= $p["pro_stock"] > 0 ? $p["pro_stock"] . " disponibles" : "Sin stock" ?></div>
           </div>
+          <?php if (($_SESSION["usuario_rol"] ?? "") === "admin"): ?>
+            <div class="card-admin">
+              <a href="editar_producto.php?id=<?= $p['pro_id'] ?>">Editar</a>
+              <form method="POST" action="eliminar_producto.php" onsubmit="return confirm('¿Seguro que quieres eliminar este producto?');" style="flex:1; margin:0;">
+                <input type="hidden" name="id" value="<?= $p['pro_id'] ?>">
+                <button type="submit" style="width:100%;">Eliminar</button>
+              </form>
+            </div>
+          <?php endif; ?>
         </div>
       <?php endforeach; ?>
     </div>
