@@ -25,7 +25,7 @@ $es_admin = ($_SESSION["usuario_rol"] ?? "") === "admin";
   a.link{ color:#14213D; }
   .admin-box{ margin-top:20px; padding-top:20px; border-top:1px solid #eee; }
   .admin-box h3{ font-size:0.9rem; color:#5B6472; text-transform:uppercase; letter-spacing:0.03em; margin-bottom:10px; }
-  .admin-box a{ display:inline-block; background:#14213D; color:#fff; padding:9px 16px; border-radius:6px; text-decoration:none; font-size:0.9rem; }
+  .admin-box p{ color:#5B6472; font-size:0.85rem; }
 </style>
 </head>
 <body>
@@ -37,7 +37,7 @@ $es_admin = ($_SESSION["usuario_rol"] ?? "") === "admin";
   <?php if ($es_admin): ?>
     <div class="admin-box">
       <h3>Panel de administrador</h3>
-      <a href="agregar_producto.php">+ Agregar producto</a>
+      <p>Próximamente: estado de ventas, pedidos y reportes.</p>
     </div>
   <?php endif; ?>
 
