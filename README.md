@@ -1,4 +1,4 @@
-# Tienda Online con Login — Proyecto de Equipo
+# Tienda Online con Login —> Proyecto de Equipo
 
 Proyecto de práctica: tienda online completa con login, catálogo, carrito y panel de administración. Construido en equipo para aprender a colaborar en GitHub con ramas y Pull Requests.
 
